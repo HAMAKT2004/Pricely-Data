@@ -1,14 +1,15 @@
-name: Run Colab Notebook
+name: Run Colab Notebook Every 5 Minutes
 
 on:
   schedule:
     - cron: '*/5 * * * *'  # Runs every 5 minutes
-  workflow_dispatch:  # Allows manual execution
+  workflow_dispatch:  # Allows manual trigger
 
 jobs:
   run-colab:
     runs-on: ubuntu-latest
     steps:
-      - name: Run Colab Notebook
+      - name: Run Google Colab Notebook
         run: |
-          curl -X POST "https://colab.research.google.com/drive/1qT0pfA9Z7Wh60QHc-Lad5HJSmZWNVt6d/execute"
+          curl -X POST -H "Authorization: Bearer ${{ secrets.COLAB_TOKEN }}" \
+               "https://colab.research.google.com/drive/1qT0pfA9Z7Wh60QHc-Lad5HJSmZWNVt6d/run"
